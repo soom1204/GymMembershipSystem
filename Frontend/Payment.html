@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Management System | How to Pay</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .nav-btn {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-btn:hover {
+            background-color: #d13354;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn i {
+            margin-right: 8px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .page-header h2 {
+            color: #1a1a2e;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Payment Methods Section */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .method-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .method-icon {
+            font-size: 3rem;
+            color: #e94560;
+            margin-bottom: 1.5rem;
+        }
+
+        .method-card h3 {
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+        }
+
+        /* Step-by-Step Guide */
+        .guide-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .guide-section h3 {
+            color: #1a1a2e;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #e94560;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background-color: #e94560;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: #666;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .faq-section h3 {
+            color: #1a1a2e;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #e94560;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+
+        .faq-question {
+            color: #1a1a2e;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.2rem;
+        }
+
+        .faq-question.active::after {
+            content: '-';
+        }
+
+        .faq-answer {
+            color: #666;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-answer.show {
+            max-height: 200px;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .copyright {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .step {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            header {
+                padding: 1rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>Gym Management System</h1>
+        </div>
+        <button class="nav-btn" id="backBtn">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="page-header">
+            <h2><i class="fas fa-money-bill-wave"></i> How to Make Payments</h2>
+            <p>Learn about the different payment methods available and how to complete your membership payments</p>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="payment-methods">
+            <div class="method-card">
+                <div class="method-icon">
+                    <i class="fas fa-money-bill-alt"></i>
+                </div>
+                <h3>Cash Payment</h3>
+                <p>Pay in person at our gym reception during working hours (9AM-9PM)</p>
+            </div>
+            <div class="method-card">
+                <div class="method-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <h3>Credit/Debit Card</h3>
+                <p>Secure online payments through our payment gateway</p>
+            </div>
+            <div class="method-card">
+                <div class="method-icon">
+                    <i class="fas fa-university"></i>
+                </div>
+                <h3>Bank Transfer</h3>
+                <p>Direct transfer to our corporate bank account</p>
+            </div>
+            <div class="method-card">
+                <div class="method-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Mobile Banking</h3>
+                <p>Pay through bKash, Nagad, or Rocket</p>
+            </div>
+        </div>
+
+        <!-- Online Payment Guide -->
+        <div class="guide-section">
+            <h3>Online Payment Instructions</h3>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Log in to Your Account</h4>
+                    <p>Access your member dashboard using your username and password</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Go to Payments Section</h4>
+                    <p>Navigate to the "My Payments" tab in your dashboard</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Select Payment Method</h4>
+                    <p>Choose your preferred payment method (Card, Mobile Banking, etc.)</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Enter Payment Details</h4>
+                    <p>Fill in the required information for your selected payment method</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h4>Confirm and Submit</h4>
+                    <p>Review your payment details and confirm the transaction</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">6</div>
+                <div class="step-content">
+                    <h4>Receive Confirmation</h4>
+                    <p>You'll receive a payment confirmation email and receipt</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bank Transfer Details -->
+        <div class="guide-section">
+            <h3>Bank Transfer Information</h3>
+            
+            <div class="step">
+                <div class="step-number"></div>
+                <div class="step-content">
+                    <h4>Bank Name: Prime Bank Ltd.</h4>
+                    <p>Account Name: FitPro Gym Management</p>
+                    <p>Account Number: 1234567890123</p>
+                    <p>Branch: Gulshan Branch, Dhaka</p>
+                    <p>Routing Number: 123456789</p>
+                    <p><strong>Important:</strong> Include your member ID as payment reference</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Payment Details -->
+        <div class="guide-section">
+            <h3>Mobile Banking Information</h3>
+            
+            <div class="step">
+                <div class="step-number"></div>
+                <div class="step-content">
+                    <h4>bKash Payment</h4>
+                    <p>Merchant Number: 01234567890</p>
+                    <p>Amount: Your membership fee amount</p>
+                    <p>Reference: Your member ID</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number"></div>
+                <div class="step-content">
+                    <h4>Nagad Payment</h4>
+                    <p>Merchant Number: 01234567890</p>
+                    <p>Amount: Your membership fee amount</p>
+                    <p>Reference: Your member ID</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h3>Payment FAQs</h3>
+            
+            <div class="faq-item">
+                <div class="faq-question">When is my payment due?</div>
+                <div class="faq-answer">
+                    <p>Payments are due on the same date each month as your initial registration date. For example, if you joined on the 15th of January, your payment will be due on the 15th of each subsequent month.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What payment methods do you accept?</div>
+                <div class="faq-answer">
+                    <p>We accept cash payments at our reception, credit/debit cards (Visa, Mastercard), bank transfers, and mobile banking (bKash, Nagad, Rocket).</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How can I get a payment receipt?</div>
+                <div class="faq-answer">
+                    <p>For online payments, a receipt will be automatically emailed to you. For cash payments, you can request a receipt at reception. For bank transfers, email us the transaction details to receive your receipt.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What happens if my payment is late?</div>
+                <div class="faq-answer">
+                    <p>Late payments may result in temporary suspension of your membership access. A late fee of ৳200 will be applied after a 5-day grace period.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I pay for multiple months in advance?</div>
+                <div class="faq-answer">
+                    <p>Yes! We offer discounts for 3-month (5% off), 6-month (10% off), and annual (15% off) advance payments. Contact our staff for details.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="copyright">
+            <p>&copy; 2025 Gym Management System. All Rights Reserved. CSE327 Project - North South University</p>
+        </div>
+    </footer>
+
+    <script>
+        // Back button functionality
+        document.getElementById('backBtn').addEventListener('click', function() {
+            // In a real implementation, this would redirect to previous page
+            alert('Returning to previous page...');
+            // window.location.href = 'dashboard.html';
+        });
+
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const answer = this.nextElementSibling;
+                answer.classList.toggle('show');
+            });
+        });
+    </script>
+</body>
+</html>

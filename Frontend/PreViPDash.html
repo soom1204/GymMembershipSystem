@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP/Premium Dashboard | Gym Management System</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .btn {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #d13354;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a2e;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e94560;
+        }
+
+        /* Stats Cards */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            max-width: 250px;
+        }
+
+        .stat-card h3 {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e94560;
+        }
+
+        /* Forms */
+        .form-container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a2e;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #e94560;
+            outline: none;
+        }
+
+        .btn-secondary {
+            background-color: #1a1a2e;
+        }
+
+        .btn-secondary:hover {
+            background-color: #2a2a3e;
+        }
+
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #1a1a2e;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .action-btn {
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            background-color: #f5f5f5;
+        }
+
+        .tab.active {
+            border-bottom-color: #e94560;
+            font-weight: 600;
+            color: #e94560;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Logout Overlay */
+        .logout-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 9999;
+            font-size: 1.5rem;
+        }
+
+        .logout-spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #e94560;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+
+        /* Announcement Styles */
+.announcement {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+    border-left: 4px solid #e94560;
+    border-radius: 4px;
+}
+
+.announcement h4 {
+    color: #1a1a2e;
+    margin-bottom: 0.5rem;
+}
+
+.announcement small {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.no-announcements {
+    color: #666;
+    text-align: center;
+    font-style: italic;
+}
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>Gym Management System</h1>
+        </div>
+        <div class="auth-actions">
+            <button id="logoutBtn" class="btn">Logout</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <h2 class="content-title">VIP Member Dashboard</h2>
+            
+            <!-- Stats Cards - Only showing locker number -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Locker Number</h3>
+                    <div class="stat-value">VIP-01</div>
+                </div>
+            </div>
+
+
+            <!-- Announcements Section -->
+<div class="form-container">
+    <h3 class="form-title"><i class="fas fa-bullhorn"></i> Announcements</h3>
+    <div id="announcements-container">
+        <!-- Announcements will be inserted here -->
+        <p class="no-announcements">No announcements yet</p>
+    </div>
+</div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" data-tab="classes">Book Classes</div>
+                <div class="tab" data-tab="trainers">Trainer Sessions</div>
+                <div class="tab" data-tab="payments">Pay Fees</div>
+            </div>
+
+            <!-- Book Classes Tab -->
+            <div class="tab-content active" id="classes-tab">
+                <div class="form-container">
+                    <h3 class="form-title">Book a Class</h3>
+                    <form id="classBookingForm">
+                        <div class="form-group">
+                            <label for="classType">Class Type</label>
+                            <select id="classType" class="form-control">
+                                <option value="">Select Class Type</option>
+                                <option value="yoga">Yoga</option>
+                                <option value="zumba">Zumba</option>
+                                <option value="spinning">Spinning</option>
+                                <option value="hiit">HIIT</option>
+                                <option value="pilates">Pilates</option>
+                                <option value="boxing">Boxing</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="classDate">Date</label>
+                            <input type="date" id="classDate" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="classTime">Time Slot</label>
+                            <select id="classTime" class="form-control">
+                                <option value="">Select Time Slot</option>
+                                <option value="morning">Morning (6:00 AM - 9:00 AM)</option>
+                                <option value="afternoon">Afternoon (12:00 PM - 3:00 PM)</option>
+                                <option value="evening">Evening (6:00 PM - 9:00 PM)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="classTrainer">Preferred Trainer</label>
+                            <select id="classTrainer" class="form-control">
+                                <option value="">Any Trainer</option>
+                                <option value="trainer1">Sarah Johnson (Yoga, Pilates)</option>
+                                <option value="trainer2">Mike Smith (HIIT, Boxing)</option>
+                                <option value="trainer3">Lisa Wong (Zumba, Spinning)</option>
+                                <option value="trainer4">David Brown (Strength Training)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn">Book Class</button>
+                    </form>
+                </div>
+
+                <h3 class="form-title" style="margin-top: 2rem;">Your Upcoming Classes</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Trainer</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Yoga</td>
+                                <td>2025-05-15</td>
+                                <td>6:00 PM</td>
+                                <td>Sarah Johnson</td>
+                                <td>
+                                    <button class="btn action-btn">Cancel</button>
+                                    <button class="btn btn-secondary action-btn">Reschedule</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>HIIT</td>
+                                <td>2025-05-17</td>
+                                <td>7:00 AM</td>
+                                <td>Mike Smith</td>
+                                <td>
+                                    <button class="btn action-btn">Cancel</button>
+                                    <button class="btn btn-secondary action-btn">Reschedule</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Zumba</td>
+                                <td>2025-05-20</td>
+                                <td>6:30 PM</td>
+                                <td>Lisa Wong</td>
+                                <td>
+                                    <button class="btn action-btn">Cancel</button>
+                                    <button class="btn btn-secondary action-btn">Reschedule</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Trainer Sessions Tab -->
+            <div class="tab-content" id="trainers-tab">
+                <div class="form-container">
+                    <h3 class="form-title">Book a Trainer Session</h3>
+                    <form id="trainerBookingForm">
+                        <div class="form-group">
+                            <label for="trainer">Trainer</label>
+                            <select id="trainer" class="form-control">
+                                <option value="">Select Trainer</option>
+                                <option value="trainer1">Sarah Johnson (Yoga, Pilates)</option>
+                                <option value="trainer2">Mike Smith (HIIT, Boxing)</option>
+                                <option value="trainer3">Lisa Wong (Zumba, Spinning)</option>
+                                <option value="trainer4">David Brown (Strength Training)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sessionDate">Date</label>
+                            <input type="date" id="sessionDate" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="sessionTime">Time</label>
+                            <input type="time" id="sessionTime" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="sessionGoal">Session Goal</label>
+                            <select id="sessionGoal" class="form-control">
+                                <option value="">Select Goal</option>
+                                <option value="technique">Technique Improvement</option>
+                                <option value="strength">Strength Building</option>
+                                <option value="endurance">Endurance Training</option>
+                                <option value="rehab">Rehabilitation</option>
+                                <option value="weight_loss">Weight Loss</option>
+                                <option value="muscle_gain">Muscle Gain</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sessionNotes">Special Notes</label>
+                            <textarea id="sessionNotes" class="form-control" rows="3" placeholder="Any special requests or notes for the trainer"></textarea>
+                        </div>
+                        <button type="submit" class="btn">Book Session</button>
+                    </form>
+                </div>
+
+                <h3 class="form-title" style="margin-top: 2rem;">Your Upcoming Sessions</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Trainer</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Goal</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mike Smith</td>
+                                <td>2025-05-16</td>
+                                <td>5:00 PM</td>
+                                <td>Strength Building</td>
+                                <td>
+                                    <button class="btn action-btn">Cancel</button>
+                                    <button class="btn btn-secondary action-btn">Reschedule</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>David Brown</td>
+                                <td>2025-05-19</td>
+                                <td>7:00 AM</td>
+                                <td>Technique Improvement</td>
+                                <td>
+                                    <button class="btn action-btn">Cancel</button>
+                                    <button class="btn btn-secondary action-btn">Reschedule</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pay Fees Tab -->
+            <div class="tab-content" id="payments-tab">
+                <div class="form-container">
+                    <h3 class="form-title">Make a Payment</h3>
+                    <form id="paymentForm">
+                        <div class="form-group">
+                            <label for="paymentAmount">Amount (৳)</label>
+                            <input type="number" id="paymentAmount" class="form-control" value="2500" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="paymentMethod">Payment Method</label>
+                            <select id="paymentMethod" class="form-control">
+                                <option value="">Select Payment Method</option>
+                                <option value="credit">Credit Card</option>
+                                <option value="debit">Debit Card</option>
+                                <option value="bank">Online Banking</option>
+                                <option value="mobile">Mobile Banking</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number</label>
+                            <input type="text" id="cardNumber" class="form-control" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <label for="expiryDate">Expiry Date</label>
+                                <input type="text" id="expiryDate" class="form-control" placeholder="MM/YY">
+                            </div>
+                            <div>
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" class="form-control" placeholder="123">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">Pay Now</button>
+                    </form>
+                </div>
+
+                <h3 class="form-title" style="margin-top: 2rem;">Payment History</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Status</th>
+                                <th>Receipt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2025-04-01</td>
+                                <td>৳2500</td>
+                                <td>Credit Card</td>
+                                <td>Completed</td>
+                                <td><button class="btn btn-secondary action-btn">Download</button></td>
+                            </tr>
+                            <tr>
+                                <td>2025-03-01</td>
+                                <td>৳2500</td>
+                                <td>Online Banking</td>
+                                <td>Completed</td>
+                                <td><button class="btn btn-secondary action-btn">Download</button></td>
+                            </tr>
+                            <tr>
+                                <td>2025-02-01</td>
+                                <td>৳2500</td>
+                                <td>Credit Card</td>
+                                <td>Completed</td>
+                                <td><button class="btn btn-secondary action-btn">Download</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+    
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+                
+                // Load data for the active tab
+                switch(tabId) {
+                    case 'classes':
+                        loadUpcomingClasses();
+                        break;
+                    case 'trainers':
+                        loadUpcomingSessions();
+                        break;
+                    case 'payments':
+                        loadPaymentHistory();
+                        break;
+                }
+            });
+        });
+    
+        // Form submissions with database integration
+        document.getElementById('classBookingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                classType: document.getElementById('classType').value,
+                classDate: document.getElementById('classDate').value,
+                classTime: document.getElementById('classTime').value,
+                classTrainer: document.getElementById('classTrainer').value
+            };
+    
+            try {
+                const response = await axios.post('/api/classes/book', formData, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    }
+                });
+                alert('Class booked successfully!');
+                // Refresh the upcoming classes list
+                loadUpcomingClasses();
+            } catch (error) {
+                console.error('Error booking class:', error);
+                alert('Failed to book class. Please try again.');
+            }
+        });
+    
+        document.getElementById('trainerBookingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                trainer: document.getElementById('trainer').value,
+                sessionDate: document.getElementById('sessionDate').value,
+                sessionTime: document.getElementById('sessionTime').value,
+                sessionGoal: document.getElementById('sessionGoal').value,
+                sessionNotes: document.getElementById('sessionNotes').value
+            };
+    
+            try {
+                const response = await axios.post('/api/trainer-sessions/book', formData, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    }
+                });
+                alert('Trainer session booked successfully!');
+                loadUpcomingSessions();
+            } catch (error) {
+                console.error('Error booking trainer session:', error);
+                alert('Failed to book trainer session. Please try again.');
+            }
+        });
+    
+        document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                amount: document.getElementById('paymentAmount').value,
+                paymentMethod: document.getElementById('paymentMethod').value,
+                cardNumber: document.getElementById('cardNumber').value,
+                expiryDate: document.getElementById('expiryDate').value,
+                cvv: document.getElementById('cvv').value
+            };
+    
+            try {
+                const response = await axios.post('/api/payments/process', formData, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    }
+                });
+                alert('Payment processed successfully!');
+                loadPaymentHistory();
+            } catch (error) {
+                console.error('Error processing payment:', error);
+                alert('Payment failed. Please try again.');
+            }
+        });
+    
+        // Data loading functions
+        async function loadUpcomingClasses() {
+            try {
+                const response = await axios.get('/api/member/upcoming-classes', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    }
+                });
+                
+                const tbody = document.querySelector('#classes-tab table tbody');
+                tbody.innerHTML = response.data.map(cls => `
+                    <tr>
+                        <td>${cls.className}</td>
+                        <td>${cls.date}</td>
+                        <td>${cls.time}</td>
+                        <td>${cls.trainerName}</td>
+                        <td>
+                            <button class="btn action-btn" onclick="cancelClass(${cls.bookingID})">Cancel</button>
+                            <button class="btn btn-secondary action-btn">Reschedule</button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading classes:', error);
+            }
+        }
+    
+        async function loadUpcomingSessions() {
+            try {
+                const response = await axios.get('/api/member/upcoming-sessions', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    }
+                });
+                
+                const tbody = document.querySelector('#trainers-tab table tbody');
+                tbody.innerHTML = response.data.map(session => `
+                    <tr>
+                        <td>${session.trainerName}</td>
+                        <td>${session.sessionDate}</td>
+                        <td>${session.sessionTime}</td>
+                        <td>${session.goal}</td>
+                        <td>
+                            <button class="btn action-btn" onclick="cancelSession(${session.sessionID})">Cancel</button>
+                            <button class="btn btn-secondary action-btn">Reschedule</button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading sessions:', error);
+            }
+        }
+    
+        async function loadPaymentHistory() {
+            try {
+                const response = await axios.get('/api/member/payment-history', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    }
+                });
+                
+                const tbody = document.querySelector('#payments-tab table tbody');
+                tbody.innerHTML = response.data.map(payment => `
+                    <tr>
+                        <td>${new Date(payment.paymentDate).toLocaleDateString()}</td>
+                        <td>৳${payment.amount}</td>
+                        <td>${payment.paymentMethod}</td>
+                        <td>${payment.status}</td>
+                        <td><button class="btn btn-secondary action-btn">Download</button></td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading payment history:', error);
+            }
+        }
+    
+        // Cancellation functions
+        async function cancelClass(bookingId) {
+            if (confirm('Are you sure you want to cancel this class?')) {
+                try {
+                    await axios.delete(`/api/classes/cancel/${bookingId}`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                        }
+                    });
+                    alert('Class cancelled successfully');
+                    loadUpcomingClasses();
+                } catch (error) {
+                    console.error('Error cancelling class:', error);
+                    alert('Failed to cancel class');
+                }
+            }
+        }
+    
+        async function cancelSession(sessionId) {
+            if (confirm('Are you sure you want to cancel this session?')) {
+                try {
+                    await axios.delete(`/api/trainer-sessions/cancel/${sessionId}`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                        }
+                    });
+                    alert('Session cancelled successfully');
+                    loadUpcomingSessions();
+                } catch (error) {
+                    console.error('Error cancelling session:', error);
+                    alert('Failed to cancel session');
+                }
+            }
+        }
+    
+        // Initialize data when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUpcomingClasses();
+        });
+    
+        // Enhanced logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', async function() {
+            if(confirm('Are you sure you want to logout?')) {
+                // Create logout overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'logout-overlay';
+                overlay.innerHTML = `
+                    <div class="logout-spinner"></div>
+                    <p>Logging out...</p>
+                `;
+                document.body.appendChild(overlay);
+                
+                try {
+                    // Clear client storage
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('user');
+                    delete axios.defaults.headers.common['Authorization'];
+                    
+                    // Make logout request
+                    await axios.post('/api/logout', {}, {
+                        withCredentials: true
+                    });
+                    
+                    // Force redirect
+                    window.location.href = '/';
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    // Still redirect even if logout fails
+                    window.location.href = '/';
+                }
+            }
+        });
+
+        function displayAnnouncement(announcement) {
+    const container = document.getElementById('announcements-container');
+    const noAnnouncements = container.querySelector('.no-announcements');
+    
+    if (noAnnouncements) {
+        noAnnouncements.remove();
+    }
+    
+    const announcementElement = document.createElement('div');
+    announcementElement.className = 'announcement';
+    announcementElement.innerHTML = `
+        <h4>${announcement.title}</h4>
+        <p>${announcement.message}</p>
+        <small>Posted by ${announcement.adminName} on ${new Date(announcement.date).toLocaleString()}</small>
+    `;
+    
+    container.prepend(announcementElement);
+    
+    // Show browser notification if permission is granted
+    if (Notification.permission === 'granted') {
+        new Notification(`New Announcement: ${announcement.title}`, {
+            body: announcement.message,
+            icon: '/path/to/notification-icon.png' // Optional
+        });
+    }
+}
+
+    </script>
+</body>
+</html>

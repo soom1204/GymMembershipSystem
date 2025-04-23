@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Management System | Member Dashboard</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .user-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #e94560;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #d13354;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h2 {
+            color: #1a1a2e;
+            font-size: 1.8rem;
+        }
+
+        .welcome-message {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .welcome-message h3 {
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-message p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: #e94560;
+            margin-bottom: 1.5rem;
+        }
+
+        .dashboard-card h3 {
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+        }
+
+        .dashboard-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-btn {
+            background-color: #1a1a2e;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .card-btn:hover {
+            background-color: #e94560;
+            transform: translateY(-2px);
+        }
+
+        /* Membership Status */
+        .membership-status {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+
+        .status-header h3 {
+            color: #1a1a2e;
+            margin: 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-expired {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .detail-item h4 {
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .detail-item p {
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+
+        /* Payment Section */
+        .payment-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .payment-header {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+
+        .payment-header h3 {
+            color: #1a1a2e;
+            margin: 0;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-method {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            border-color: #e94560;
+        }
+
+        .payment-method.selected {
+            border-color: #e94560;
+            background-color: #fef6f7;
+        }
+
+        .payment-method h4 {
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .payment-method i {
+            color: #e94560;
+        }
+
+        .payment-method p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .payment-form {
+            margin-top: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #d13354;
+            transform: translateY(-2px);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .copyright {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+            
+            .user-info span {
+                display: none;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        /* Logout Overlay */
+        .logout-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 9999;
+            font-size: 1.5rem;
+        }
+
+        .logout-spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #e94560;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Workout Plan Details */
+        .workout-details {
+            text-align: left;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .workout-details h4 {
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+
+        .workout-details ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .workout-details li {
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        /* Announcement Styles */
+.dashboard-card#announcements-container {
+    text-align: left;
+}
+
+.announcement {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+    border-left: 4px solid #e94560;
+    border-radius: 4px;
+}
+
+.announcement h4 {
+    color: #1a1a2e;
+    margin-bottom: 0.5rem;
+}
+
+.announcement small {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.no-announcements {
+    color: #666;
+    text-align: center;
+    font-style: italic;
+}
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>Gym Management System</h1>
+        </div>
+        <div class="auth-actions">
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h2>Member Dashboard</h2>
+            <div class="date-display">Today: <span id="currentDate"></span></div>
+        </div>
+
+        <!-- Welcome Message -->
+<!-- Welcome Message -->
+<div class="welcome-message">
+    <h3 id="welcomeMessage">Welcome back!</h3>
+</div>
+
+<!-- Announcements Section -->
+<div class="dashboard-card">
+    <h3><i class="fas fa-bullhorn"></i> Announcements</h3>
+    <div id="announcements-container">
+        <!-- Announcements will be inserted here -->
+        <p class="no-announcements">No announcements yet</p>
+    </div>
+</div>
+
+<!-- Workout Plan Card -->
+<div class="dashboard-card">
+    <h3>Your Workout Plan</h3>
+    <p id="workoutPlanName">Loading...</p>
+    <div class="workout-details">
+        <h4>Equipment Needed:</h4>
+        <ul id="equipmentList">
+            <li>Loading...</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+        <!-- Membership Status -->
+        <div class="membership-status">
+            <div class="status-header">
+                <h3>Membership Status</h3>
+                <span class="status-badge status-active">Active</span>
+            </div>
+            <div class="status-details">
+                <div class="detail-item">
+                    <h4>Membership Type</h4>
+                    <p>Standard</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Monthly Fee</h4>
+                    <p>৳750</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Next Payment Due</h4>
+                    <p>May 5, 2025</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Access Expires</h4>
+                    <p>June 5, 2025</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Section -->
+        <div class="payment-section">
+            <div class="payment-header">
+                <h3><i class="fas fa-money-bill-wave"></i> Make a Payment</h3>
+            </div>
+            
+            <div class="payment-methods">
+                <div class="payment-method selected">
+                    <h4><i class="fas fa-credit-card"></i> Credit/Debit Card</h4>
+                    <p>Secure online payment with Visa, Mastercard, or American Express</p>
+                </div>
+                <div class="payment-method">
+                    <h4><i class="fas fa-university"></i> Bank Transfer</h4>
+                    <p>Direct transfer to our bank account</p>
+                </div>
+                <div class="payment-method">
+                    <h4><i class="fas fa-mobile-alt"></i> Mobile Banking</h4>
+                    <p>bKash, Nagad, or Rocket payments</p>
+                </div>
+            </div>
+            
+            <div class="payment-form">
+                <form id="paymentForm">
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                    </div>
+                    
+                    <div class="form-row" style="display: flex; gap: 1rem;">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="expiryDate">Expiry Date</label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="123">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="amount">Amount (৳)</label>
+                        <input type="text" id="amount" value="750" readonly>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-lock"></i> Pay Now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="copyright">
+            <p>&copy; 2025 Gym Management System. All Rights Reserved. CSE327 Project - North South University</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Display current date
+        function displayCurrentDate() {
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = today.toLocaleDateString('en-US', options);
+        }
+    
+        // 2. Main function to load user data
+        async function loadUserData() {
+            try {
+                // First try to get from localStorage
+                let user = JSON.parse(localStorage.getItem('user'));
+                
+                // If not found, fetch from API
+                if (!user) {
+                    const response = await axios.get('/api/member/profile');
+                    user = response.data;
+                    localStorage.setItem('user', JSON.stringify(user));
+                }
+    
+                // Update welcome message
+                if (user && user.name) {
+                    document.getElementById('welcomeMessage').textContent = `Welcome back, ${user.name}!`;
+                }
+    
+                // Load workout plan if available
+                if (user && user.workoutPlanID) {
+                    await loadWorkoutPlan(user.workoutPlanID);
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                showErrorMessages();
+            }
+        }
+    
+        // 3. Function to load workout plan
+        async function loadWorkoutPlan() {
+    try {
+        // Get fresh data from API
+        const response = await axios.get('/api/member/profile');
+        const user = response.data;
+        
+        // Update workout plan
+        const planName = user.planName || "Custom Plan";
+        document.getElementById('workoutPlanName').textContent = planName;
+        
+        // Update equipment list
+        const equipmentList = document.getElementById('equipmentList');
+        equipmentList.innerHTML = '';
+        
+        if (user.equipmentList) {
+            // Handle both comma and comma+space separated lists
+            const equipmentItems = user.equipmentList.split(/,\s*/);
+            equipmentItems.forEach(item => {
+                if (item.trim()) {
+                    const li = document.createElement('li');
+                    li.textContent = item.trim();
+                    equipmentList.appendChild(li);
+                }
+            });
+        } else {
+            equipmentList.innerHTML = '<li>No equipment specified</li>';
+        }
+        
+    } catch (error) {
+        console.error("Workout plan error:", error);
+        document.getElementById('workoutPlanName').textContent = "Error loading plan";
+        document.getElementById('equipmentList').innerHTML = '<li>Error loading equipment</li>';
+    }
+}
+
+// Call this when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    loadWorkoutPlan();
+    // ... your other initialization code ...
+});
+    
+        // 4. Show error messages
+        function showErrorMessages() {
+            document.getElementById('welcomeMessage').textContent = 'Welcome back!';
+            document.getElementById('workoutPlanName').textContent = 'Workout plan not available';
+            document.getElementById('equipmentList').innerHTML = '<li>Could not load equipment</li>';
+        }
+    
+        // 5. Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            displayCurrentDate();
+            loadUserData();
+            
+            // Your existing payment and logout handlers
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.addEventListener('click', function() {
+                    document.querySelectorAll('.payment-method').forEach(m => {
+                        m.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+    
+            document.getElementById('logoutBtn').addEventListener('click', async function() {
+                if(confirm('Are you sure you want to logout?')) {
+                    const overlay = document.createElement('div');
+                    overlay.className = 'logout-overlay';
+                    overlay.innerHTML = `
+                        <div class="logout-spinner"></div>
+                        <p>Logging out...</p>
+                    `;
+                    document.body.appendChild(overlay);
+                    
+                    try {
+                        localStorage.removeItem('authToken');
+                        localStorage.removeItem('user');
+                        delete axios.defaults.headers.common['Authorization'];
+                        await axios.post('/api/logout', {}, { withCredentials: true });
+                        window.location.href = '/';
+                    } catch (error) {
+                        console.error('Logout error:', error);
+                        window.location.href = '/';
+                    }
+                }
+            });
+        });
+
+        function displayAnnouncement(announcement) {
+    const container = document.getElementById('announcements-container');
+    const noAnnouncements = container.querySelector('.no-announcements');
+    
+    if (noAnnouncements) {
+        noAnnouncements.remove();
+    }
+    
+    const announcementElement = document.createElement('div');
+    announcementElement.className = 'announcement';
+    announcementElement.innerHTML = `
+        <h4>${announcement.title}</h4>
+        <p>${announcement.message}</p>
+        <small>Posted by ${announcement.adminName} on ${new Date(announcement.date).toLocaleString()}</small>
+    `;
+    
+    container.prepend(announcementElement);
+    
+    // Show browser notification if permission is granted
+    if (Notification.permission === 'granted') {
+        new Notification(`New Announcement: ${announcement.title}`, {
+            body: announcement.message,
+            icon: '/path/to/notification-icon.png' // Optional
+        });
+    }
+}
+
+    </script>
+</body>
+</html>

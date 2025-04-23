@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Management System | Admin Dashboard</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .admin-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logout-btn {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .logout-btn:hover {
+            background-color: #d13354;
+            transform: translateY(-2px);
+        }
+
+        .logout-btn i {
+            margin-right: 8px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h2 {
+            color: #1a1a2e;
+            font-size: 1.8rem;
+        }
+
+        .date-display {
+            color: #666;
+        }
+
+        /* Dashboard Cards Layout */
+        .dashboard-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .card-header {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h3 {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .card-btn {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .card-btn:hover {
+            background-color: #d13354;
+            transform: translateY(-2px);
+        }
+
+        .card-btn i {
+            margin-right: 6px;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Form Styles */
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            flex: 1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+
+        .submit-btn {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background-color: #d13354;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn i {
+            margin-right: 8px;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        table th {
+            background-color: #f9f9f9;
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .action-btn {
+            background-color: transparent;
+            border: none;
+            color: #e94560;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0 0.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            color: #d13354;
+            transform: translateY(-2px);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .copyright {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            header {
+                padding: 1rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+
+            /* Announcement Styles */
+.announcement {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+    border-left: 4px solid #e94560;
+    border-radius: 4px;
+}
+
+.announcement h4 {
+    color: #1a1a2e;
+    margin-bottom: 0.5rem;
+}
+
+.announcement small {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.no-announcements {
+    color: #666;
+    text-align: center;
+    font-style: italic;
+}
+
+.btn-secondary {
+    background-color: #1a1a2e;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #2a2a3e;
+    transform: translateY(-2px);
+}
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>Gym Management System</h1>
+        </div>
+        <div class="auth-actions">
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h2>Admin Dashboard</h2>
+            <div class="date-display">Today: <span id="currentDate"></span></div>
+        </div>
+
+        <!-- Announcements Section -->
+<div class="dashboard-card">
+    <div class="card-header">
+        <h3><i class="fas fa-bullhorn"></i> Announcements</h3>
+        <button class="card-btn" id="createAnnouncementBtn">
+            <i class="fas fa-plus"></i> New
+        </button>
+    </div>
+    <div class="card-body" id="announcements-container">
+        <!-- Announcements will be inserted here -->
+        <p class="no-announcements">No announcements yet</p>
+    </div>
+</div>
+
+<!-- Announcement Form (initially hidden) -->
+<div class="dashboard-card" id="announcement-form" style="display: none;">
+    <div class="card-header">
+        <h3><i class="fas fa-bullhorn"></i> Create Announcement</h3>
+    </div>
+    <div class="card-body">
+        <form id="createAnnouncementForm">
+            <div class="form-group">
+                <label for="announcementTitle">Title</label>
+                <input type="text" id="announcementTitle" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="announcementMessage">Message</label>
+                <textarea id="announcementMessage" class="form-control" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane"></i> Send Announcement
+            </button>
+            <button type="button" id="cancelAnnouncementBtn" class="btn-secondary" style="margin-left: 1rem;">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard-cards">
+            <!-- SignUp Trainer Card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-user-plus"></i> SignUp Trainer</h3>
+                    <button class="card-btn" id="viewAllTrainers">
+                        <i class="fas fa-list"></i> View All
+                    </button>
+                </div>
+                <div class="card-body">
+                    <form id="trainerSignupForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="trainerName">Full Name</label>
+                                <input type="text" id="trainerName" name="trainerName" placeholder="Enter full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="trainerUsername">Username</label>
+                                <input type="text" id="trainerUsername" name="trainerUsername" placeholder="Choose username" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="trainerEmail">Email</label>
+                                <input type="email" id="trainerEmail" name="trainerEmail" placeholder="Enter email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="trainerPassword">Password</label>
+                                <input type="password" id="trainerPassword" name="trainerPassword" placeholder="Create password" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="trainerGender">Gender</label>
+                                <select id="trainerGender" name="trainerGender" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="trainerAge">Age</label>
+                                <input type="number" id="trainerAge" name="trainerAge" placeholder="Enter age" min="18" max="70" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="trainerEthnicity">Ethnicity</label>
+                                <input type="text" id="trainerEthnicity" name="trainerEthnicity" placeholder="Enter ethnicity">
+                            </div>
+                            <div class="form-group">
+                                <label for="trainerMobile">Mobile Number</label>
+                                <input type="tel" id="trainerMobile" name="trainerMobile" placeholder="Enter mobile number" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-user-plus"></i> Register Trainer
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- SignUp Admin Card -->
+<div class="dashboard-card">
+    <div class="card-header">
+        <h3><i class="fas fa-user-shield"></i> SignUp Admin</h3>
+    </div>
+    <div class="card-body">
+        <form id="adminSignupForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="adminName">Full Name</label>
+                    <input type="text" id="adminName" name="adminName" placeholder="Enter full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminUsername">Username</label>
+                    <input type="text" id="adminUsername" name="adminUsername" placeholder="Choose username" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="adminEmail">Email</label>
+                    <input type="email" id="adminEmail" name="adminEmail" placeholder="Enter email" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" name="adminPassword" placeholder="Create password" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-user-shield"></i> Register Admin
+            </button>
+        </form>
+    </div>
+</div>
+
+            <!-- Member Management Card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-users"></i> Member Management</h3>
+                    <button class="card-btn" id="addNewMember">
+                        <i class="fas fa-plus"></i> Add Member
+                    </button>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Package</th>
+                                <th>Join Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Asif</td>
+                                <td>Premium</td>
+                                <td>2023-10-15</td>
+                                <td><span class="status-badge status-completed">Active</span></td>
+                                <td>
+                                    <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Opu</td>
+                                <td>VIP</td>
+                                <td>2023-11-01</td>
+                                <td><span class="status-badge status-completed">Active</span></td>
+                                <td>
+                                    <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Track Payments Card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-money-bill-wave"></i> Track Payments</h3>
+                    <button class="card-btn" id="viewAllPayments">
+                        <i class="fas fa-eye"></i> View All
+                    </button>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Alif</td>
+                                <td>৳1500</td>
+                                <td>2023-11-15</td>
+                                <td><span class="status-badge status-completed">Paid</span></td>
+                            </tr>
+                            <tr>
+                                <td>James</td>
+                                <td>৳2500</td>
+                                <td>2023-11-14</td>
+                                <td><span class="status-badge status-completed">Paid</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Schedule Classes Card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-alt"></i> Schedule Classes</h3>
+                    <button class="card-btn" id="addNewClass">
+                        <i class="fas fa-plus"></i> Add Class
+                    </button>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Class Name</th>
+                                <th>Trainer</th>
+                                <th>Date & Time</th>
+                                <th>Capacity</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Yoga Basics</td>
+                                <td>Rahman</td>
+                                <td>Mon, Wed 9:00 AM</td>
+                                <td>12/15</td>
+                                <td>
+                                    <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn" title="Cancel"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>HIIT Workout</td>
+                                <td>Ahnaf</td>
+                                <td>Tue, Thu 5:00 PM</td>
+                                <td>8/10</td>
+                                <td>
+                                    <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn" title="Cancel"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Strength Training</td>
+                                <td>ahmed</td>
+                                <td>Fri 7:00 AM</td>
+                                <td>5/10</td>
+                                <td>
+                                    <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn" title="Cancel"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="copyright">
+            <p>&copy; 2025 Gym Management System. All Rights Reserved. CSE327 Project - North South University</p>
+        </div>
+    </footer>
+
+    <script>
+        // Display current date
+        const today = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').textContent = today.toLocaleDateString('en-US', options);
+
+        // Logout button functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            if(confirm('Are you sure you want to logout?')) {
+                alert('Logging out...');
+                // window.location.href = 'login.html';
+            }
+        });
+
+        // Trainer Signup Form
+        document.getElementById('trainerSignupForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const trainerData = {
+    name: document.getElementById('trainerName').value,
+    username: document.getElementById('trainerUsername').value,
+    email: document.getElementById('trainerEmail').value,
+    password: document.getElementById('trainerPassword').value,
+    gender: document.getElementById('trainerGender').value,
+    age: document.getElementById('trainerAge').value,
+    ethnicity: document.getElementById('trainerEthnicity').value,
+    mobileNumber: document.getElementById('trainerMobile').value
+  };
+
+  try {
+    const response = await fetch('/api/register-trainer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+      body: JSON.stringify(trainerData)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Trainer registration failed');
+    }
+
+    alert(`Trainer ${data.user.name} registered successfully!`);
+    this.reset();
+  } catch (error) {
+    console.error('Trainer registration error:', error);
+    alert(error.message);
+  }
+});
+
+        // Admin Signup Form
+document.getElementById('adminSignupForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Get form values
+    const adminData = {
+        name: document.getElementById('adminName').value,
+        username: document.getElementById('adminUsername').value,
+        email: document.getElementById('adminEmail').value,
+        password: document.getElementById('adminPassword').value
+    };
+    
+    // Basic validation
+    if (!adminData.name || !adminData.username || !adminData.email || !adminData.password) {
+        alert('Please fill in all required fields!');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/register-admin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            },
+            body: JSON.stringify(adminData)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Admin registration failed');
+        }
+
+        alert(`Admin ${data.user.name} registered successfully!`);
+        this.reset();
+    } catch (error) {
+        console.error('Admin registration error:', error);
+        alert(error.message);
+    }
+});
+
+
+        // Button functionality
+        document.getElementById('viewAllTrainers').addEventListener('click', function() {
+            alert('Redirecting to trainers list...');
+            // window.location.href = 'trainers.html';
+        });
+
+        document.getElementById('addNewMember').addEventListener('click', function() {
+            alert('Opening member registration form...');
+            // window.location.href = 'add-member.html';
+        });
+
+        document.getElementById('viewAllPayments').addEventListener('click', function() {
+            alert('Redirecting to payments page...');
+            // window.location.href = 'payments.html';
+        });
+
+        document.getElementById('addNewClass').addEventListener('click', function() {
+            alert('Opening class scheduling form...');
+            // window.location.href = 'add-class.html';
+        });
+    </script>
+    <script type="module">
+        import { isAuthenticated, logout } from '/assets/js/auth.js';
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                // Show/hide based on authentication
+                logoutBtn.style.display = isAuthenticated() ? 'block' : 'none';
+                
+                // Add click handler
+                logoutBtn.addEventListener('click', async () => {
+                    await logout();
+                });
+            }
+            
+            // Optional: Redirect if not authenticated
+            if (!isAuthenticated()) {
+                window.location.href = '/login';
+            }
+        });
+
+// Announcement form handling
+document.getElementById('createAnnouncementBtn').addEventListener('click', function() {
+    document.getElementById('announcements-container').style.display = 'none';
+    document.getElementById('announcement-form').style.display = 'block';
+});
+
+document.getElementById('cancelAnnouncementBtn').addEventListener('click', function() {
+    document.getElementById('announcements-container').style.display = 'block';
+    document.getElementById('announcement-form').style.display = 'none';
+    document.getElementById('createAnnouncementForm').reset();
+});
+
+document.getElementById('createAnnouncementForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const title = document.getElementById('announcementTitle').value;
+    const message = document.getElementById('announcementMessage').value;
+    
+    try {
+        const response = await fetch('/api/announcements', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            },
+            body: JSON.stringify({ title, message })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to create announcement');
+        }
+        
+        alert('Announcement sent successfully!');
+        this.reset();
+        document.getElementById('announcements-container').style.display = 'block';
+        document.getElementById('announcement-form').style.display = 'none';
+        
+    } catch (error) {
+        console.error('Error creating announcement:', error);
+        alert(error.message);
+    }
+});
+
+    </script>
+</body>
+</html>

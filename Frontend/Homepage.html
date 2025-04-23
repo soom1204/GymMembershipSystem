@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Management System | Home</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        /* Header Styles */
+
+
+/* Auth Buttons */
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.signup-btn {
+    background-color: #e94560;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.login-btn {
+    background-color: #1a1a2e;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.signup-btn:hover {
+    background-color: #d13354;
+    transform: translateY(-2px);
+}
+
+.login-btn:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+}
+
+.signup-btn i,
+.login-btn i {
+    margin-right: 8px;
+}
+
+header {
+    background-color: #1a1a2e;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.account-btn {
+    background-color: #e94560;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.account-btn:hover {
+    background-color: #d13354;
+    transform: translateY(-2px);
+}
+
+.account-btn i {
+    margin-right: 8px;
+}
+
+        /* Banner Styles */
+        .banner {
+            margin-top: 80px;
+            height: 500px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 2rem;
+        }
+
+        .banner h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+            animation: fadeIn 2s ease;
+        }
+
+        .cta-btn {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeIn 2.5s ease;
+        }
+
+        .cta-btn:hover {
+            background-color: #d13354;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 2rem;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            color: #1a1a2e;
+        }
+
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #e94560;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a2e;
+        }
+
+        /* Membership Section */
+        .membership {
+            padding: 4rem 2rem;
+            background-color: #f5f5f5;
+        }
+
+        .membership-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .membership-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .membership-card:hover {
+            transform: scale(1.05);
+        }
+
+        .membership-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #1a1a2e;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e94560;
+            margin-bottom: 1.5rem;
+        }
+
+        .membership-card ul {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .membership-card ul li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .membership-card ul li:before {
+            content: "✓";
+            color: #4CAF50;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .membership-btn {
+            background-color: #1a1a2e;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .membership-btn:hover {
+            background-color: #e94560;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #e94560;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: #e94560;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #e94560;
+        }
+
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #333;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .banner h2 {
+                font-size: 2.2rem;
+            }
+
+            .banner p {
+                font-size: 1rem;
+            }
+
+            header {
+                padding: 1rem;
+            }
+
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+
+            .account-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    
+    <!-- Header with Logo and Account Button -->
+    <!-- Header with Logo and Buttons -->
+<header>
+    <div class="logo">
+        <h1>Gym Management System</h1>
+    </div>
+    <div class="auth-buttons">
+        <button class="signup-btn" id="signupBtn">
+            <i class="fas fa-user-plus"></i> Sign Up
+        </button>
+        <button class="login-btn" id="loginBtn">
+            <i class="fas fa-sign-in-alt"></i> Log In
+        </button>
+    </div>
+</header>
+
+    <!-- Banner Section -->
+    <section class="banner">
+        <h2>Transform Your Gym Experience</h2>
+        <p>Our comprehensive Gym Management System streamlines operations, enhances member engagement, and simplifies administrative tasks for gyms of all sizes.</p>
+        <button class="cta-btn" id="learnMoreBtn">Learn More</button>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title">Key Features</h2>
+        <div class="features-container">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Member Management</h3>
+                <p>Easily manage member registrations, profiles, and membership tiers with our intuitive interface.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <h3>Workout Plans</h3>
+                <p>Customized workout plans for different fitness goals with recommended equipment and exercises.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3>Class Scheduling</h3>
+                <p>Efficiently schedule classes, assign trainers, and manage member bookings with real-time updates.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Locker Management</h3>
+                <p>Automated locker assignments for premium members with secure access control.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Performance Tracking</h3>
+                <p>Monitor member progress and gym performance with comprehensive analytics and reports.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <h3>Payment Processing</h3>
+                <p>Secure payment gateway integration for hassle-free membership fee collection.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Section -->
+    <section class="membership">
+        <h2 class="section-title">Membership Packages</h2>
+        <div class="membership-container">
+            <div class="membership-card">
+                <h3>Standard</h3>
+                <div class="price">৳750<span>/month</span></div>
+                <ul>
+                    <li>Access to gym equipment</li>
+                    <li>Basic workout plans</li>
+                    <li>24/7 gym access</li>
+                    <li>Email support</li>
+                </ul>
+                <button class="membership-btn">Choose Plan</button>
+            </div>
+            <div class="membership-card" style="border: 2px solid #e94560;">
+                <h3>Premium</h3>
+                <div class="price">৳1500<span>/month</span></div>
+                <ul>
+                    <li>All Standard benefits</li>
+                    <li>Personal locker access</li>
+                    <li>Up to 5 classes/month</li>
+                    <li>Up to 5 trainer sessions</li>
+                    <li>Priority support</li>
+                </ul>
+                <button class="membership-btn">Choose Plan</button>
+            </div>
+            <div class="membership-card">
+                <h3>VIP</h3>
+                <div class="price">৳2500<span>/month</span></div>
+                <ul>
+                    <li>All Premium benefits</li>
+                    <li>Unlimited classes</li>
+                    <li>Unlimited trainer sessions</li>
+                    <li>Premium locker</li>
+                    <li>24/7 VIP support</li>
+                    <li>Nutrition plans</li>
+                </ul>
+                <button class="membership-btn">Choose Plan</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <p>Our Gym Management System is designed to revolutionize how gyms operate, providing a seamless experience for both staff and members.</p>
+                <ul>
+                    <li><a href="#"> </a></li>
+                    <li><a href="#">Shakela Mostofa Priya (2132049642)</a></li>
+                    <li><a href="#">Mahmudur Rahman Labib (2131214642)</a></li>
+                    <li><a href="#">Soomaiya Chowdhury (2211856042)</a></li>
+                    
+                </ul>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Membership</a></li>
+                    <li><a href="#">Trainers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> North South University, Dhaka</li>
+                
+                    <li><i class="fas fa-envelope"></i> shakela.priya@northsouth.edu</li>
+                    <li><i class="fas fa-envelope"></i> mahmudur.labib@northsouth.edu</li>
+                    <li><i class="fas fa-envelope"></i> soomaiya.chowdhury@northsouth.edu</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Gym Management System. All Rights Reserved. CSE327 Project - North South University</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for interactive elements
+        // Sign Up button functionality
+document.getElementById('signupBtn').addEventListener('click', function() {
+    window.location.href = 'MemberSignUp.html';
+});
+
+// Log In button functionality
+document.getElementById('loginBtn').addEventListener('click', function() {
+    window.location.href = 'login.html';
+});
+
+        document.getElementById('learnMoreBtn').addEventListener('click', function() {
+            // Scroll to features section
+            document.querySelector('.features').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        });
+
+        // Add click event to all membership buttons
+        const membershipButtons = document.querySelectorAll('.membership-btn');
+        membershipButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const membershipType = this.closest('.membership-card').querySelector('h3').textContent;
+                alert(`You've selected the ${membershipType} package. Registration will be implemented here!`);
+                // In a real implementation, this would redirect to registration
+            });
+        });
+    </script>
+</body>
+</html>
